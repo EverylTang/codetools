@@ -1,4 +1,4 @@
-import { ConvertOptions, ConverterResult, toPascalCase, toCamelCase, toSnakeCase, isJsonObject, inferJsonType } from "./types";
+import { ConvertOptions, ConverterResult, toPascalCase, toCamelCase, isJsonObject, inferJsonType } from "./types";
 
 export function convertToJava(
   json: Record<string, unknown>,

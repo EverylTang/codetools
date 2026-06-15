@@ -1,4 +1,4 @@
-import { ConvertOptions, ConverterResult, toPascalCase, toCamelCase, toSnakeCase, isJsonObject, inferJsonType, tagForStyle } from "./types";
+import { ConvertOptions, ConverterResult, toPascalCase, isJsonObject, inferJsonType, tagForStyle } from "./types";
 
 export function convertToGo(
   json: Record<string, unknown>,

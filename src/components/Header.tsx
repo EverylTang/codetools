@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 import ThemeToggle from "./ThemeToggle";
 
@@ -21,11 +22,15 @@ export default function Header() {
           </div>
         </div>
         <nav className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+          <Link href="/tools" className="hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
+            {t.tools.page.toolsHome}
+          </Link>
           <ThemeToggle />
           <button
             onClick={() => setLocale(locale === "zh" ? "en" : "zh")}
             className="px-2 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-            title={locale === "zh" ? "切换为英文" : "Switch to Chinese"}
+            aria-label={t.switchLanguage}
+            title={locale === "zh" ? t.switchToEnglish : t.switchToChinese}
           >
             {locale === "zh" ? "EN" : "中"}
           </button>

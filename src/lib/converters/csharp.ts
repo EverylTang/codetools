@@ -1,4 +1,4 @@
-import { ConvertOptions, ConverterResult, toPascalCase, toCamelCase, isJsonObject, inferJsonType } from "./types";
+import { ConvertOptions, ConverterResult, toPascalCase, isJsonObject, inferJsonType } from "./types";
 
 export function convertToCSharp(
   json: Record<string, unknown>,
@@ -7,7 +7,6 @@ export function convertToCSharp(
   const nestedTypes: string[] = [];
   const typeStack: string[] = [];
   const useNullable = options.useNullable || false;
-  const useOptional = options.useOptional || false;
   const serialAnnotation = options.serialAnnotation || false;
 
   function convertValue(value: unknown, key: string): string {

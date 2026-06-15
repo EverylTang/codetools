@@ -1,9 +1,11 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/I18nProvider";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
+  const { t } = useI18n();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -19,7 +21,8 @@ export default function ThemeToggle() {
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-      aria-label="切换主题"
+      aria-label={t.toggleTheme}
+      title={t.toggleTheme}
     >
       {theme === "dark" ? (
         <svg

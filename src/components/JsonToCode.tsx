@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { convertToTypeScript } from "@/lib/converters/typescript";
 import { convertToGo } from "@/lib/converters/golang";
 import { convertToPython } from "@/lib/converters/python";
@@ -81,8 +81,8 @@ function decodeUrl(): { json?: string; lang?: Language; rootName?: string } {
   return result;
 }
 
-function parseJsonError(error: any, jsonStr: string): { message: string; line?: number; column?: number } {
-  const errorMessage = error.message || "Invalid JSON";
+function parseJsonError(error: unknown, jsonStr: string): { message: string; line?: number; column?: number } {
+  const errorMessage = error instanceof Error ? error.message : "Invalid JSON";
   const positionMatch = errorMessage.match(/at position (\d+)/);
   const lineColumnMatch = errorMessage.match(/at line (\d+) column (\d+)/);
   
@@ -180,7 +180,7 @@ export default function JsonToCode() {
       }
 
       setOutput(result.code);
-    } catch (e: any) {
+    } catch (e) {
       setError(parseJsonError(e, jsonStr));
       setOutput("");
     } finally {
@@ -193,11 +193,9 @@ export default function JsonToCode() {
       const timer = setTimeout(() => convert(jsonInput, language), 300);
       return () => clearTimeout(timer);
     }
+    setOutput("");
+    setError(null);
   }, [jsonInput, language, convert]);
-
-  useEffect(() => {
-    if (jsonInput.trim()) convert(jsonInput, language);
-  }, [rootName, tsUseType, javaLombok, goTagStyle]);
 
   useEffect(() => {
     if (mounted) {
@@ -273,7 +271,7 @@ export default function JsonToCode() {
           setJsonInput(content);
           setError(null);
         } catch {
-          setError({ message: "文件内容不是有效的 JSON", line: undefined, column: undefined });
+          setError({ message: t.invalidJson, line: undefined, column: undefined });
         }
       };
       reader.readAsText(file);
@@ -282,7 +280,7 @@ export default function JsonToCode() {
   };
 
   const handleImportUrl = async () => {
-    const url = prompt("请输入 JSON URL:");
+    const url = prompt(t.importUrlPlaceholder);
     if (!url) return;
     try {
       const response = await fetch(url);
@@ -290,8 +288,9 @@ export default function JsonToCode() {
       JSON.parse(text);
       setJsonInput(text);
       setError(null);
-    } catch (err: any) {
-      setError({ message: `无法获取 URL 内容: ${err.message}`, line: undefined, column: undefined });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : t.invalidJson;
+      setError({ message: `${t.importUrl}: ${message}`, line: undefined, column: undefined });
     }
   };
 
@@ -437,7 +436,7 @@ export default function JsonToCode() {
                 <label className="text-xs font-medium text-gray-600 dark:text-gray-400">{t.tagStyle}:</label>
                 <select
                   value={goTagStyle}
-                  onChange={(e) => setGoTagStyle(e.target.value as any)}
+                  onChange={(e) => setGoTagStyle(e.target.value as "json" | "camel" | "none")}
                   className="px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="json">snake_case</option>

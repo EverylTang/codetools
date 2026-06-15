@@ -70,7 +70,7 @@ export function convertToSwift(
       
       lines.push("");
       lines.push(`  enum CodingKeys: String, CodingKey {`);
-      Object.entries(obj).forEach(([key, value]) => {
+      Object.keys(obj).forEach((key) => {
         const fieldName = toCamelCase(key);
         if (fieldName !== key) {
           lines.push(`    case ${fieldName} = "${key}"`);
