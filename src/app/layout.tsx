@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProviderWrapper } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -17,40 +18,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JSON2Code - Convert JSON to TypeScript, Go, Python, Java, Rust, C#, Swift & Kotlin",
-  description: "Free online tool to convert JSON into TypeScript interfaces, Go structs, Python dataclasses, Java classes, Rust structs, C# classes, Swift structs, and Kotlin data classes. Fast, accurate, no sign-up required.",
+  title: "CodeTools - Free Online Developer Tools",
+  description: "Free online developer tools: Base64, JSON formatter, hash generator, UUID, QR code, currency converter, password generator, and more. All client-side, no data leaves your browser.",
   keywords: [
-    "json to typescript",
-    "json to go struct",
-    "json to python dataclass",
-    "json to java class",
-    "json to rust struct",
-    "json to csharp class",
-    "json to swift struct",
-    "json to kotlin data class",
-    "json converter",
-    "type generator",
-    "JSON 转 TypeScript",
-    "JSON 转 Go",
-    "JSON 转 Java",
+    "developer tools",
+    "online tools",
+    "base64",
+    "json formatter",
+    "hash generator",
+    "uuid generator",
+    "qr code generator",
+    "currency converter",
+    "password generator",
+    "developer toolbox",
   ],
   openGraph: {
-    title: "JSON2Code - Convert JSON to 8 Programming Languages",
-    description: "Paste JSON and instantly generate code in TypeScript, Go, Python, Java, Rust, C#, Swift, and Kotlin. Free developer tool with i18n support.",
+    title: "CodeTools - Free Online Developer Tools",
+    description: "18+ free online developer tools. Format JSON, generate hashes, create QR codes, convert currencies, test regex, and more. All in your browser.",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "JSON2Code - JSON to Code Converter",
+        alt: "CodeTools - Free Online Developer Tools",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "JSON2Code - JSON to 8 Languages Converter",
-    description: "Convert JSON to TypeScript, Go, Python, Java, Rust, C#, Swift & Kotlin instantly. Free tool, no signup.",
+    title: "CodeTools - Free Online Developer Tools",
+    description: "18+ free online developer tools. All client-side, no server upload.",
     images: ["/og-image.png"],
   },
   robots: {
