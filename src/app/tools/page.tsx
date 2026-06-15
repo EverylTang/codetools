@@ -20,6 +20,7 @@ const tools = [
   { name: "Payment Webhook Simulator", slug: "payment-webhook", desc: "Simulate Alipay, WeChat Pay, and Stripe payment callbacks for testing.", icon: "🔔" },
   { name: "RSA Key Generator", slug: "rsa-key-generator", desc: "Generate 2048/4096 bit RSA key pairs in PEM format using Web Crypto API.", icon: "🔐" },
   { name: "Cron Expression", slug: "cron", desc: "Build cron expressions visually and calculate next 10 execution times.", icon: "⏰" },
+  { name: "frp Tunnel Config", slug: "tunnel-config", desc: "Generate frpc.ini files for HTTP and TCP tunnels with copy and download actions.", icon: "FRP" },
   { name: "Markdown Preview", slug: "markdown-preview", desc: "Write Markdown with real-time split-pane preview supporting GFM.", icon: "📝" },
   { name: "JSON Formatter", slug: "json-formatter", desc: "Format, validate, compress JSON with tree view and error detection.", icon: "📋" },
 ];
@@ -66,7 +67,7 @@ export default function ToolsPage() {
 
       <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
         <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
-          {tp.footer || "JSON2Code Toolbox — Free online developer tools."}
+          {tp.footer || "JSON2Code Toolbox - Free online developer tools."}
         </p>
       </div>
     </div>

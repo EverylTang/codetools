@@ -22,6 +22,7 @@ const tools = [
   { name: "Markdown Preview", slug: "markdown-preview", icon: "📝" },
   { name: "JSON Formatter", slug: "json-formatter", icon: "📋" },
   { name: "Acquiring Margin Calculator", slug: "acquiring-margin-calculator", icon: "📈" },
+  { name: "frp Tunnel Config", slug: "tunnel-config", icon: "🔌" },
 ];
 
 const categories = [
@@ -50,6 +51,11 @@ const categories = [
     titleZh: "支付与金融",
     tools: ["payment-webhook", "acquiring-margin-calculator"],
   },
+  {
+    title: "Network & Tunnel",
+    titleZh: "网络与隧道",
+    tools: ["tunnel-config"],
+  },
 ];
 
 export default function HomePage() {
@@ -70,8 +76,8 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             {isZh
-              ? "18+ 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
-              : "18+ developer tools that run entirely in your browser. No data uploads, no signup required."}
+              ? "19+ 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
+              : "19+ developer tools that run entirely in your browser. No data uploads, no signup required."}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link

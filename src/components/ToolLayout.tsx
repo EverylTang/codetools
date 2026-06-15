@@ -49,7 +49,7 @@ export default function ToolLayout({ title, description, toolKey, children }: To
       </div>
       <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
         <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
-          {displayTitle} &mdash; {pageData.footer || "Free online tool. All processing is done client-side. No data is sent to any server."}
+          {displayTitle} - {pageData.footer || "Free online tool. All processing is done client-side. No data is sent to any server."}
         </p>
       </div>
     </div>
