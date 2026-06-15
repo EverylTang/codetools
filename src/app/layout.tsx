@@ -5,6 +5,7 @@ import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProviderWrapper } from "@/components/ThemeProvider";
+import { Analytics } from "@vercel/analytics/react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -64,11 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           async
@@ -76,12 +73,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+      <body className={`min-h-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 ${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProviderWrapper>
           <I18nProvider>
             <Header />
             <main className="flex-1 flex flex-col">{children}</main>
             <Footer />
+            <Analytics />
           </I18nProvider>
         </ThemeProviderWrapper>
       </body>
