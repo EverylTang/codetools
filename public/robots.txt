@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://json2code-rosy.vercel.app/sitemap.xml
+Sitemap: https://codetools.cc/sitemap.xml

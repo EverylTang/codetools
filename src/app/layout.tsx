@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "CodeTools - Free Online Developer Tools",
-    description: "18+ free online developer tools. Format JSON, generate hashes, create QR codes, convert currencies, test regex, and more. All in your browser.",
+    description: "19 free online developer tools. Format JSON, generate hashes, create QR codes, convert currencies, test regex, and more. All in your browser.",
     type: "website",
     images: [
       {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "CodeTools - Free Online Developer Tools",
-    description: "18+ free online developer tools. All client-side, no server upload.",
+    description: "19 free online developer tools. All client-side, no server upload.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -70,6 +70,26 @@ export default function RootLayout({
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3864848447623769"
           crossOrigin="anonymous"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "CodeTools - Free Online Developer Tools",
+              url: "https://codetools.cc",
+              description: "Free online developer tools: Base64, JSON formatter, hash generator, UUID, QR code, currency converter, password generator, and more. All client-side.",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://codetools.cc/search?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
         />
       </head>
       <body className={`min-h-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 ${geistSans.variable} ${geistMono.variable} antialiased`}>

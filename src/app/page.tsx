@@ -76,8 +76,8 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             {isZh
-              ? "19+ 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
-              : "19+ developer tools that run entirely in your browser. No data uploads, no signup required."}
+              ? "19 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
+              : "19 developer tools that run entirely in your browser. No data uploads, no signup required."}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -89,8 +89,8 @@ export default function HomePage() {
           </div>
           <div className="mt-6 text-xs text-gray-400 dark:text-gray-500">
             {isZh
-              ? `✅ 18 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
-              : `✅ 18 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
+              ? `✅ 19 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
+              : `✅ 19 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
           </div>
         </div>
       </section>

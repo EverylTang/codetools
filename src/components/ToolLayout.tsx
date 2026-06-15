@@ -22,8 +22,22 @@ export default function ToolLayout({ title, description, toolKey, children }: To
   const displayDesc = toolData.description || description || "";
   const pageData = getToolData(t, "page") || {};
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: pageData.home || "Home", item: "https://codetools.cc" },
+      { "@type": "ListItem", position: 2, name: pageData.toolsHome || "Tools", item: "https://codetools.cc/tools" },
+      { "@type": "ListItem", position: 3, name: displayTitle, item: `https://codetools.cc/tools/${toolKey}` },
+    ],
+  };
+
   return (
     <div className="flex flex-col flex-1 h-full max-w-4xl mx-auto w-full px-4 py-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="mb-6">
         <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 mb-2">
           <Link href="/" className="hover:text-blue-500 transition-colors">{pageData.home || "Home"}</Link>

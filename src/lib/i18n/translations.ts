@@ -482,7 +482,7 @@ export const translations = {
     title: "CodeTools",
     subtitle: "免费在线开发者工具",
     ogTitle: "CodeTools - 免费在线开发者工具",
-    ogDescription: "免费在线开发者工具：JSON 格式化、哈希生成、二维码生成、汇率换算、正则测试等 18+ 工具。所有计算在浏览器中完成，数据不上传服务器。",
+    ogDescription: "免费在线开发者工具：JSON 格式化、哈希生成、二维码生成、汇率换算、正则测试等 19 个工具。所有计算在浏览器中完成，数据不上传服务器。",
     footer: "CodeTools - 免费在线开发者工具。所有计算在客户端完成，不会向任何服务器发送数据。",
     github: "GitHub",
     pricing: "定价",
