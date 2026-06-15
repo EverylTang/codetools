@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
-import { getToolsPageTranslations, getToolTranslations, ToolKey } from "@/lib/i18n/toolTranslations";
 
 const tools = [
   { name: "Base64 Encode/Decode", slug: "base64", desc: "Encode and decode Base64 text, or convert files to Base64 data URIs.", icon: "🔐" },
@@ -13,6 +12,7 @@ const tools = [
   { name: "Password Generator", slug: "password", desc: "Create strong random passwords with customizable length, character types, and strength meter.", icon: "🔑" },
   { name: "QR Code Generator", slug: "qr-code", desc: "Generate QR codes from any text, URL, or data. Download as high-quality PNG.", icon: "〰️" },
   { name: "Currency Converter", slug: "currency-converter", desc: "Convert between 50+ currencies with real-time exchange rates and popular pair shortcuts.", icon: "💱" },
+  { name: "Acquiring Margin Calculator", slug: "acquiring-margin-calculator", desc: "Calculate processing fee revenue, channel cost, FX margin, and total acquiring gross margin.", icon: "📈" },
   { name: "HMAC Generator", slug: "hmac-generator", desc: "Generate HMAC-MD5, SHA1, SHA256, SHA384, SHA512 signatures for API auth and payment verification.", icon: "🔏" },
   { name: "Word Counter", slug: "word-counter", desc: "Count characters, words, lines, sentences, paragraphs, reading time, and more in real-time.", icon: "📊" },
   { name: "Color Converter", slug: "color-converter", desc: "Convert between HEX, RGB, HSL, HSV, and CMYK with live color preview swatch.", icon: "🎨" },
@@ -26,26 +26,26 @@ const tools = [
 
 export default function ToolsPage() {
   const { t } = useI18n();
-  const tp = getToolsPageTranslations(t);
+  const ttools = (t as any).tools || {};
+  const tp = ttools.page || {};
 
   return (
     <div className="flex flex-col flex-1 h-full max-w-4xl mx-auto w-full px-4 py-8">
       <div className="mb-8">
         <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 mb-2">
-          <Link href="/" className="hover:text-blue-500 transition-colors">{tp.home}</Link>
+          <Link href="/" className="hover:text-blue-500 transition-colors">{tp.home || "Home"}</Link>
           <span>/</span>
-          <span className="text-gray-600 dark:text-gray-300">{tp.toolsHome}</span>
+          <span className="text-gray-600 dark:text-gray-300">{tp.toolsHome || "Tools"}</span>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{tp.title}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{tp.title || "Developer Tools"}</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          {tp.description}
+          {tp.description || "Free online tools for developers."}
         </p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => {
-          const toolText = getToolTranslations(t, tool.slug as ToolKey);
-
+          const toolText = ttools[tool.slug] || {};
           return (
             <Link
               key={tool.slug}
@@ -66,7 +66,7 @@ export default function ToolsPage() {
 
       <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
         <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
-          {tp.footer}
+          {tp.footer || "JSON2Code Toolbox — Free online developer tools."}
         </p>
       </div>
     </div>
