@@ -5,7 +5,6 @@ import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProviderWrapper } from "@/components/ThemeProvider";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
