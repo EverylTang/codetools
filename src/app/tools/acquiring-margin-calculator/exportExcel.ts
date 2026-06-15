@@ -61,7 +61,7 @@ export function buildExcelHtml(state: CalculatorState, result: MarginResult): st
   ];
 
   const mixRows = [
-    ["Enabled", "Method", "Type", "User region", "GMV share %", "Txn share %", "Quote variable %", "Quote fixed", "Quote fixed ccy", "Cost variable %", "Cost fixed", "Cost fixed ccy", "Cost notes"],
+    ["Enabled", "Method", "Type", "User region", "GMV share %", "Txn share %"],
     ...state.payments.map((row) => [
       row.enabled ? "Yes" : "No",
       row.method,
@@ -69,9 +69,27 @@ export function buildExcelHtml(state: CalculatorState, result: MarginResult): st
       row.userRegion,
       row.gmvSharePercent,
       row.txnSharePercent ?? row.gmvSharePercent,
+    ]),
+  ];
+
+  const quoteRows = [
+    ["Method", "Type", "Quote variable %", "Quote fixed", "Quote fixed ccy", "Min fee", "Max fee"],
+    ...state.payments.map((row) => [
+      row.method,
+      row.transactionType,
       row.quoteVariablePercent,
       row.quoteFixedFee,
       row.quoteFixedCurrency,
+      row.minFee ?? "",
+      row.maxFee ?? "",
+    ]),
+  ];
+
+  const costRows = [
+    ["Method", "Type", "Cost variable %", "Cost fixed", "Cost fixed ccy", "Cost notes"],
+    ...state.payments.map((row) => [
+      row.method,
+      row.transactionType,
       row.costVariablePercent,
       row.costFixedFee,
       row.costFixedCurrency,
@@ -109,6 +127,8 @@ export function buildExcelHtml(state: CalculatorState, result: MarginResult): st
         ${sheet("Merchant", merchantRows)}
         ${sheet("Volume", volumeRows)}
         ${sheet("Payment Mix", mixRows)}
+        ${sheet("Quote", quoteRows)}
+        ${sheet("Cost", costRows)}
         ${sheet("FX", fxRows)}
         ${sheet("Exchange Rates", rateRows)}
         ${sheet("Details", detailRows)}

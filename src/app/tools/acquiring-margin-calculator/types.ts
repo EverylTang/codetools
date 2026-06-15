@@ -35,6 +35,8 @@ export type PaymentRow = {
   costFixedFee: number;
   costFixedCurrency: CurrencyCode;
   costNotes: string;
+  minFee?: number;
+  maxFee?: number;
 };
 
 export type FxConfig = {

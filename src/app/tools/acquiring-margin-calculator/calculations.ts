@@ -81,7 +81,12 @@ function calculatePaymentRow(row: PaymentRow, state: CalculatorState, monthlyGmv
   const gmv = monthlyGmv * (row.gmvSharePercent / 100);
   const txnCount = monthlyTxnCount * (txnShare / 100);
   const fixedRevenue = convertToSettlement(row.quoteFixedFee, row.quoteFixedCurrency, state) * txnCount;
-  const revenue = gmv * (row.quoteVariablePercent / 100) + fixedRevenue;
+  let revenue = gmv * (row.quoteVariablePercent / 100) + fixedRevenue;
+  if (txnCount > 0) {
+    const perTxn = revenue / txnCount;
+    if (row.minFee !== undefined && perTxn < row.minFee) revenue = row.minFee * txnCount;
+    if (row.maxFee !== undefined && perTxn > row.maxFee) revenue = row.maxFee * txnCount;
+  }
   const fixedCost = convertToSettlement(row.costFixedFee, row.costFixedCurrency, state) * txnCount;
   const variableCost = gmv * (row.costVariablePercent / 100);
   const cost = variableCost + fixedCost;
@@ -103,6 +108,15 @@ function calculatePaymentRow(row: PaymentRow, state: CalculatorState, monthlyGmv
   };
 }
 
+export function calculateFxMargin(state: CalculatorState, monthlyGmv: number): { fxRevenue: number; fxCost: number; fxMargin: number } {
+  const fxEnabled = state.fx.orderCurrency !== state.fx.settlementCurrency && state.fx.eligibleGmvPercent > 0;
+  const fxGmv = fxEnabled ? monthlyGmv * (state.fx.eligibleGmvPercent / 100) : 0;
+  const fxRevenue = fxGmv * (state.fx.markupPercent / 100);
+  const fxCost = fxGmv * ((state.fx.channelCostPercent + state.fx.internalCostPercent) / 100);
+  const fxMargin = fxRevenue - fxCost;
+  return { fxRevenue: round(fxRevenue), fxCost: round(fxCost), fxMargin: round(fxMargin) };
+}
+
 export function calculateMargin(state: CalculatorState): MarginResult {
   const { errors, warnings } = validateState(state);
   const volume = deriveVolume(state);
@@ -110,11 +124,7 @@ export function calculateMargin(state: CalculatorState): MarginResult {
   const processingRevenue = detailRows.reduce((sum, row) => sum + row.revenue, 0);
   const processingCost = detailRows.reduce((sum, row) => sum + row.cost, 0);
   const processingMargin = processingRevenue - processingCost;
-  const fxEnabled = state.fx.orderCurrency !== state.fx.settlementCurrency && state.fx.eligibleGmvPercent > 0;
-  const fxGmv = fxEnabled ? volume.monthlyGmv * (state.fx.eligibleGmvPercent / 100) : 0;
-  const fxRevenue = fxGmv * (state.fx.markupPercent / 100);
-  const fxCost = fxGmv * ((state.fx.channelCostPercent + state.fx.internalCostPercent) / 100);
-  const fxMargin = fxRevenue - fxCost;
+  const { fxRevenue, fxCost, fxMargin } = calculateFxMargin(state, volume.monthlyGmv);
   const totalRevenue = processingRevenue + fxRevenue;
   const totalCost = processingCost + fxCost;
   const totalGrossMargin = processingMargin + fxMargin;

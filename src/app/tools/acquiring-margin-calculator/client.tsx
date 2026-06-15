@@ -67,6 +67,7 @@ export default function AcquiringMarginClient() {
   const tk = t.tools["acquiring-margin-calculator"];
   const [state, setState] = useState<CalculatorState>(() => cloneDefaultState());
   const [notice, setNotice] = useState("");
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const result = useMemo(() => calculateMargin(state), [state]);
   const ccy = state.merchant.settlementCurrency;
@@ -134,8 +135,13 @@ export default function AcquiringMarginClient() {
     setState((current) => ({ ...current, exchangeRates: { ...current.exchangeRates, [currency]: value } }));
   };
 
+  const dateStr = () => {
+    const d = new Date(state.merchant.date || Date.now());
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  };
+
   const saveJson = () => {
-    const filename = `${safeFilename(state.merchant.merchantName)}.json`;
+    const filename = `acquiring-margin-${safeFilename(state.merchant.merchantName)}-${dateStr()}.json`;
     downloadText(filename, JSON.stringify({ ...state, result, savedAt: new Date().toISOString() }, null, 2), "application/json;charset=utf-8");
     setNotice(tk.saved || "JSON saved.");
   };
@@ -145,7 +151,7 @@ export default function AcquiringMarginClient() {
       setNotice(tk.fixErrors || "Fix validation errors before exporting.");
       return;
     }
-    const filename = `${safeFilename(state.merchant.merchantName)}.xls`;
+    const filename = `acquiring-margin-${safeFilename(state.merchant.merchantName)}-${dateStr()}.xls`;
     downloadText(filename, buildExcelHtml(state, result), "application/vnd.ms-excel;charset=utf-8");
     setNotice(tk.exported || "Excel file exported.");
   };
@@ -258,9 +264,17 @@ export default function AcquiringMarginClient() {
 
       <Section label="03" title={tk.paymentStructure || "Payment Structure, Quote & Cost"}>
         <div className="flex justify-between items-center gap-3 mb-3">
-          <p className="text-xs text-gray-500 dark:text-gray-400">{tk.mixHint}</p>
-          <button onClick={addPayment} className="shrink-0 px-3 py-2 text-xs font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">{tk.addRow || "Add row"}</button>
-        </div>
+            <div className="flex items-center gap-2">
+              <p className="text-xs text-gray-500 dark:text-gray-400">{tk.mixHint}</p>
+              <label className="flex items-center gap-1.5 text-xs text-gray-400 cursor-pointer select-none" onClick={() => setShowAdvanced((prev) => !prev)}>
+                <span className={`inline-block w-3 h-3 rounded border ${showAdvanced ? "bg-blue-500 border-blue-500" : "border-gray-400 dark:border-gray-500"}`}>
+                  {showAdvanced && <span className="flex items-center justify-center text-white text-[8px] font-bold">✓</span>}
+                </span>
+                {tk.advanced || "Advanced"}
+              </label>
+            </div>
+            <button onClick={addPayment} className="shrink-0 px-3 py-2 text-xs font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">{tk.addRow || "Add row"}</button>
+          </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1320px] text-left text-xs">
             <thead className="text-gray-500 dark:text-gray-400">
@@ -271,6 +285,8 @@ export default function AcquiringMarginClient() {
                 <th className="py-2 pr-3">{tk.userRegion || "User region"}</th>
                 <th className="py-2 pr-3">{tk.gmvShare || "GMV share %"}</th>
                 <th className="py-2 pr-3">{tk.txnShare || "Txn share %"}</th>
+                {showAdvanced && <th className="py-2 pr-3">{tk.minFee || "Min fee"}</th>}
+                {showAdvanced && <th className="py-2 pr-3">{tk.maxFee || "Max fee"}</th>}
                 <th className="py-2 pr-3">{tk.variablePercent}</th>
                 <th className="py-2 pr-3">{tk.fixed}</th>
                 <th className="py-2 pr-3">{tk.fixedCurrency}</th>
@@ -289,6 +305,8 @@ export default function AcquiringMarginClient() {
                   <td className="py-2 pr-3"><input value={row.userRegion} onChange={(event) => updatePayment(row.id, "userRegion", event.target.value)} className={smallInputClass} /></td>
                   <td className="py-2 pr-3"><NumberInput value={row.gmvSharePercent} onChange={(value) => updatePayment(row.id, "gmvSharePercent", value)} /></td>
                   <td className="py-2 pr-3"><NumberInput value={row.txnSharePercent ?? row.gmvSharePercent} onChange={(value) => updatePayment(row.id, "txnSharePercent", value)} /></td>
+                  {showAdvanced && <td className="py-2 pr-3"><NumberInput value={row.minFee ?? 0} onChange={(value) => updatePayment(row.id, "minFee", value)} /></td>}
+                  {showAdvanced && <td className="py-2 pr-3"><NumberInput value={row.maxFee ?? 0} onChange={(value) => updatePayment(row.id, "maxFee", value)} /></td>}
                   <td className="py-2 pr-3"><NumberInput value={row.quoteVariablePercent} onChange={(value) => updatePayment(row.id, "quoteVariablePercent", value)} /></td>
                   <td className="py-2 pr-3"><NumberInput value={row.quoteFixedFee} onChange={(value) => updatePayment(row.id, "quoteFixedFee", value)} /></td>
                   <td className="py-2 pr-3"><Select value={row.quoteFixedCurrency} onChange={(value) => updatePayment(row.id, "quoteFixedCurrency", value as CurrencyCode)} options={CURRENCIES} /></td>
