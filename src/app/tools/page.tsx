@@ -4,6 +4,15 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Base64 File Converter", slug: "base64-file", desc: "Convert files to Base64 data URIs and decode Base64 back to editable files. Supports images, PDFs.", icon: "📁" },
+  { name: "Text Diff", slug: "text-diff", desc: "Compare two texts line by line with color-coded diff highlighting. Unified and split view.", icon: "🔍" },
+  { name: "Bcrypt Hash & Verify", slug: "bcrypt", desc: "Generate bcrypt password hashes and verify passwords. Adjustable cost factor.", icon: "🔒" },
+  { name: "AES Encryption", slug: "aes-cipher", desc: "Encrypt and decrypt text using AES-CBC and AES-GCM with 128/192/256-bit keys.", icon: "🔐" },
+  { name: "User-Agent Parser", slug: "user-agent", desc: "Parse any User-Agent string to identify browser, OS, device, and engine.", icon: "🖥" },
+  { name: "Chmod Calculator", slug: "chmod-calc", desc: "Calculate Linux file permissions. Toggle r/w/x and see octal and symbolic notation.", icon: "🔢" },
+  { name: "IP Address Tools", slug: "ip-tools", desc: "Subnet calculator, CIDR notation, and IP-to-integer converter. IPv4 support.", icon: "🌐" },
+  { name: "JSONPath Tester", slug: "jsonpath-tester", desc: "Test JSONPath expressions against JSON data. Supports filters, slices, recursive descent.", icon: "🔎" },
+  { name: "Lorem Ipsum Generator", slug: "lorem-ipsum", desc: "Generate Lorem Ipsum placeholder text. Configurable paragraphs, sentences, and words.", icon: "📝" },
   { name: "Signature Verification", slug: "sign-verify", desc: "Verify payment and API signatures. Compare computed HMAC/RSA signatures with received values.", icon: "✓" },
   { name: "Webhook Receiver", slug: "webhook-receiver", desc: "Create a temporary webhook endpoint to receive and inspect real-time payment callbacks.", icon: "📡" },
   { name: "Payment API Debugger", slug: "payment-debug", desc: "Construct, sign, send, and inspect payment API requests. Full debugging workflow.", icon: "🐛" },

@@ -1,6 +1,15 @@
 import { MetadataRoute } from "next";
 
 const tools = [
+  "base64-file",
+  "text-diff",
+  "bcrypt",
+  "aes-cipher",
+  "user-agent",
+  "chmod-calc",
+  "ip-tools",
+  "jsonpath-tester",
+  "lorem-ipsum",
   "sign-verify",
   "webhook-receiver",
   "payment-debug",

@@ -4,6 +4,15 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Base64 File Converter", slug: "base64-file", icon: "📁" },
+  { name: "Text Diff", slug: "text-diff", icon: "🔍" },
+  { name: "Bcrypt Hash & Verify", slug: "bcrypt", icon: "🔒" },
+  { name: "AES Encryption", slug: "aes-cipher", icon: "🔐" },
+  { name: "User-Agent Parser", slug: "user-agent", icon: "🖥" },
+  { name: "Chmod Calculator", slug: "chmod-calc", icon: "🔢" },
+  { name: "IP Address Tools", slug: "ip-tools", icon: "🌐" },
+  { name: "JSONPath Tester", slug: "jsonpath-tester", icon: "🔎" },
+  { name: "Lorem Ipsum Generator", slug: "lorem-ipsum", icon: "📝" },
   { name: "Signature Verification", slug: "sign-verify", icon: "✓" },
   { name: "Webhook Receiver", slug: "webhook-receiver", icon: "📡" },
   { name: "Payment API Debugger", slug: "payment-debug", icon: "🐛" },
@@ -48,27 +57,27 @@ const categories = [
   {
     title: "Encoding & Hashing",
     titleZh: "编码与哈希",
-    tools: ["base64", "hash-generator", "hmac-generator", "url-encode", "html-entities", "jwt-decoder"],
+    tools: ["base64", "base64-file", "hash-generator", "hmac-generator", "url-encode", "html-entities", "jwt-decoder", "bcrypt", "aes-cipher"],
   },
   {
     title: "Formatters",
     titleZh: "格式化",
-    tools: ["json-formatter", "sql-formatter", "xml-formatter", "json-diff", "word-counter", "color-converter", "regex-tester"],
+    tools: ["json-formatter", "sql-formatter", "xml-formatter", "json-diff", "text-diff", "word-counter", "color-converter", "regex-tester", "jsonpath-tester"],
   },
   {
     title: "Converters",
     titleZh: "数据转换",
-    tools: ["json-csv", "json-yaml", "case-converter", "timestamp", "currency-converter", "json-to-code"],
+    tools: ["json-csv", "json-yaml", "case-converter", "timestamp", "currency-converter", "json-to-code", "user-agent", "ip-tools"],
   },
   {
     title: "Generators",
     titleZh: "生成器",
-    tools: ["uuid", "password", "qr-code", "rsa-key-generator", "cron", "markdown-preview", "ulid-generator"],
+    tools: ["uuid", "password", "qr-code", "rsa-key-generator", "cron", "markdown-preview", "ulid-generator", "lorem-ipsum"],
   },
   {
     title: "Network & Reference",
     titleZh: "网络与参考",
-    tools: ["tunnel-config", "http-status"],
+    tools: ["tunnel-config", "http-status", "chmod-calc"],
   },
 ];
 
@@ -90,8 +99,8 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             {isZh
-              ? "33 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
-              : "33 developer tools that run entirely in your browser. No data uploads, no signup required."}
+              ? "42 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
+              : "42 developer tools that run entirely in your browser. No data uploads, no signup required."}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -103,8 +112,8 @@ export default function HomePage() {
           </div>
           <div className="mt-6 text-xs text-gray-400 dark:text-gray-500">
             {isZh
-              ? `✅ 33 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
-              : `✅ 33 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
+              ? `✅ 42 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
+              : `✅ 42 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
           </div>
         </div>
       </section>
