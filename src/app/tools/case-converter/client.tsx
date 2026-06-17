@@ -29,7 +29,6 @@ const CASE_STYLES: CaseStyle[] = [
 ];
 
 function splitWords(text: string): string[] {
-  // Handle camelCase, PascalCase, snake_case, kebab-case, etc.
   return text
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/[_-]/g, " ")
@@ -62,16 +61,18 @@ export default function CaseConverterClient() {
     setTimeout(() => setCopied({ ...copied, [key]: false }), 2000);
   };
 
+  const copyLabel = tk.copy || "Copy";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Input */}
       <div className="flex flex-col">
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Input Text</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{tk.inputText || "Input Text"}</label>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter text to convert..."
+          placeholder={tk.enterText || "Enter text to convert..."}
           className="p-2.5 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
           spellCheck={false}
         />
@@ -95,7 +96,7 @@ export default function CaseConverterClient() {
               disabled={!results[style.key]}
               className="ml-2 text-[10px] px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 flex-shrink-0"
             >
-              {copied[style.key] ? "✓" : "Copy"}
+              {copied[style.key] ? "✓" : copyLabel}
             </button>
           </div>
         ))}

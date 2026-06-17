@@ -34,7 +34,6 @@ export default function WebhookReceiverClient() {
     : "";
 
   useEffect(() => {
-    // Connect SSE
     const es = new EventSource(`/api/webhook-receiver/${sessionId}`);
     eventSourceRef.current = es;
 
@@ -75,6 +74,19 @@ export default function WebhookReceiverClient() {
     return body;
   };
 
+  const statusLabel = status === "connected" ? (tk.listening || "Listening") : status === "error" ? (tk.disconnected || "Disconnected") : (tk.connecting || "Connecting...");
+  const copyUrlLabel = tk.copyUrl || "Copy URL";
+  const copiedUrlLabel = tk.copiedUrl || "Copied";
+  const webhookHintLabel = tk.webhookHint || "Copy this URL and paste it into your payment platform's webhook/callback settings. All incoming requests will appear below.";
+  const sendTestLabel = tk.sendTestWebhook || "Send Test Webhook";
+  const sendFormLabel = tk.sendFormTest || "Send Form-Encoded Test";
+  const clearLabel = tk.clearEvents || "Clear";
+  const eventsLabel = tk.events || "Events";
+  const noEventsLabel = tk.noEvents || "No events received yet. Send a test webhook or configure your payment platform.";
+  const emptyDetailLabel = tk.emptyDetail || "Select an event from the list";
+  const bodyLabel = tk.requestBody || "Body";
+  const waitingLabel = "Waiting for requests...";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Webhook URL */}
@@ -83,16 +95,16 @@ export default function WebhookReceiverClient() {
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${status === "connected" ? "bg-green-500" : status === "error" ? "bg-red-500" : "bg-yellow-500"}`} />
             <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">
-              {status === "connected" ? "Listening" : status === "error" ? "Disconnected" : "Connecting..."}
+              {statusLabel}
             </span>
           </div>
           <button onClick={copyUrl} className="px-2.5 py-1 text-xs font-medium rounded bg-blue-500 text-white hover:bg-blue-600 transition-colors">
-            {copied ? "✓ Copied" : "Copy URL"}
+            {copied ? `✓ ${copiedUrlLabel}` : copyUrlLabel}
           </button>
         </div>
         <code className="text-xs font-mono text-blue-800 dark:text-blue-200 break-all select-all">{webhookUrl}</code>
         <p className="text-[10px] text-blue-600 dark:text-blue-400 mt-2">
-          Copy this URL and paste it into your payment platform's webhook/callback settings. All incoming requests will appear below.
+          {webhookHintLabel}
         </p>
       </div>
 
@@ -107,7 +119,7 @@ export default function WebhookReceiverClient() {
             });
           }}
           className="px-3 py-1.5 text-xs font-medium rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors"
-        >Send Test Webhook</button>
+        >{sendTestLabel}</button>
         <button
           onClick={async () => {
             await fetch(webhookUrl, {
@@ -117,8 +129,8 @@ export default function WebhookReceiverClient() {
             });
           }}
           className="px-3 py-1.5 text-xs font-medium rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors"
-        >Send Form-Encoded Test</button>
-        <button onClick={clearEvents} className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Clear</button>
+        >{sendFormLabel}</button>
+        <button onClick={clearEvents} className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">{clearLabel}</button>
       </div>
 
       {/* Events list */}
@@ -126,11 +138,11 @@ export default function WebhookReceiverClient() {
         {/* Event list */}
         <div className="w-64 shrink-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden flex flex-col">
           <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-            Events ({events.length})
+            {eventsLabel} ({events.length})
           </div>
           <div className="flex-1 overflow-auto">
             {events.length === 0 ? (
-              <div className="p-4 text-xs text-gray-400 text-center">Waiting for requests...</div>
+              <div className="p-4 text-xs text-gray-400 text-center">{waitingLabel}</div>
             ) : (
               events.map((evt) => (
                 <button
@@ -166,7 +178,7 @@ export default function WebhookReceiverClient() {
                 </div>
               </div>
               <div className="p-3">
-                <div className="text-[10px] text-gray-400 mb-1">Body</div>
+                <div className="text-[10px] text-gray-400 mb-1">{bodyLabel}</div>
                 <pre className="text-xs font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-all bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
                   {formatBody(selected.body, selected.contentType)}
                 </pre>
@@ -174,7 +186,7 @@ export default function WebhookReceiverClient() {
             </div>
           ) : (
             <div className="flex-1 flex items-center justify-center text-xs text-gray-400">
-              {events.length === 0 ? "Send a webhook to see details" : "Select an event from the list"}
+              {events.length === 0 ? noEventsLabel : emptyDetailLabel}
             </div>
           )}
         </div>

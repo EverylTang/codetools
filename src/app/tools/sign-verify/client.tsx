@@ -15,7 +15,6 @@ const ALGOS: { key: SignAlgo; label: string; category: "HMAC" | "RSA" }[] = [
   { key: "RSA-SHA1", label: "RSA-SHA1", category: "RSA" },
 ];
 
-// Pure JS HMAC-MD5
 function hmacMd5(key: string, message: string): string {
   function md5(input: string): string {
     function rotateLeft(x: number, n: number) { return (x << n) | (x >>> (32 - n)); }
@@ -85,12 +84,6 @@ async function rsaVerify(algo: string, publicKeyPem: string, message: string, si
   }
 }
 
-const PRESETS = [
-  { label: "Alipay Callback", message: "gmt_create=2024-06-15 12:00:00&charset=utf-8&seller_email=test@example.com&subject=Test&sign_type=RSA2&out_trade_no=OUT20240615&total_fee=0.01", key: "your_secret_key_here", algo: "HMAC-SHA256" as SignAlgo },
-  { label: "WeChat Pay", message: "appid=wx888&mch_id=1900000109&nonce_str=5K8264ILTK&out_trade_no=OUT20240615&total_fee=1", key: "mysecretkey123", algo: "HMAC-SHA256" as SignAlgo },
-  { label: "Stripe Webhook", message: '{"id":"evt_123","type":"payment_intent.succeeded","data":{"object":{"id":"pi_123","amount":1000}}}', key: "whsec_abc123", algo: "HMAC-SHA256" as SignAlgo },
-];
-
 export default function SignVerifyClient() {
   const { t } = useI18n();
   const tk = (t as any).tools?.["sign-verify"] || {};
@@ -133,22 +126,46 @@ export default function SignVerifyClient() {
 
   useMemo(() => { verify(); }, [verify]);
 
+  const PRESETS = [
+    { label: "Alipay Callback", message: "gmt_create=2024-06-15 12:00:00&charset=utf-8&seller_email=test@example.com&subject=Test&sign_type=RSA2&out_trade_no=OUT20240615&total_fee=0.01", key: "your_secret_key_here", algo: "HMAC-SHA256" as SignAlgo },
+    { label: "WeChat Pay", message: "appid=wx888&mch_id=1900000109&nonce_str=5K8264ILTK&out_trade_no=OUT20240615&total_fee=1", key: "mysecretkey123", algo: "HMAC-SHA256" as SignAlgo },
+    { label: "Stripe Webhook", message: '{"id":"evt_123","type":"payment_intent.succeeded","data":{"object":{"id":"pi_123","amount":1000}}}', key: "whsec_abc123", algo: "HMAC-SHA256" as SignAlgo },
+  ];
+
+  const algoLabel = tk.algorithm || "Algorithm";
+  const msgLabel = tk.message || "Message / Original Text";
+  const msgPlaceholder = tk.messagePlaceholder || "Enter the original message or callback data...";
+  const secretKeyLabel = tk.secretKey || "Secret Key";
+  const secretKeyPlaceholder = tk.secretKeyPlaceholder || "Enter your secret key...";
+  const publicKeyLabel = tk.publicKey || "Public Key (PEM)";
+  const publicKeyPlaceholder = tk.publicKeyPlaceholder || "-----BEGIN PUBLIC KEY-----...";
+  const receivedSigLabel = tk.receivedSignature || "Received Signature";
+  const sigPlaceholder = tk.signaturePlaceholder || "Paste the signature you received from the payment gateway...";
+  const computedSigLabel = tk.computedSignature || "Computed Signature";
+  const matchLabel = tk.match || "Signature Matches!";
+  const noMatchLabel = tk.noMatch || "Signature Does NOT Match";
+  const enterDataLabel = tk.enterData || "Enter data to verify";
+  const presetsLabel = tk.presets || "Quick Examples";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Presets */}
-      <div className="flex flex-wrap gap-2">
-        {PRESETS.map((p) => (
-          <button
-            key={p.label}
-            onClick={() => { setAlgo(p.algo); setMessage(p.message); setSecretKey(p.key); setReceivedSig(""); }}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >{p.label}</button>
-        ))}
+      <div className="flex flex-col gap-1">
+        <label className="text-[10px] text-gray-400">{presetsLabel}</label>
+        <div className="flex flex-wrap gap-2">
+          {PRESETS.map((p) => (
+            <button
+              key={p.label}
+              onClick={() => { setAlgo(p.algo); setMessage(p.message); setSecretKey(p.key); setReceivedSig(""); }}
+              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            >{p.label}</button>
+          ))}
+        </div>
       </div>
 
       {/* Algorithm selector */}
       <div className="flex flex-col gap-1">
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400">Algorithm</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400">{algoLabel}</label>
         <div className="flex flex-wrap gap-1">
           <div className="w-full text-[10px] text-gray-400 mb-1">HMAC</div>
           {ALGOS.filter(a => a.category === "HMAC").map(a => (
@@ -168,23 +185,23 @@ export default function SignVerifyClient() {
       {/* Inputs */}
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 block">Message / Original Text</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 block">{msgLabel}</label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Enter the original message or callback data..."
+            placeholder={msgPlaceholder}
             className="w-full p-2.5 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[80px] resize-y"
             spellCheck={false}
           />
         </div>
         <div>
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 block">
-            {isRsa ? "Public Key (PEM)" : "Secret Key"}
+            {isRsa ? publicKeyLabel : secretKeyLabel}
           </label>
           <textarea
             value={isRsa ? publicKey : secretKey}
             onChange={(e) => isRsa ? setPublicKey(e.target.value) : setSecretKey(e.target.value)}
-            placeholder={isRsa ? "-----BEGIN PUBLIC KEY-----..." : "Enter your secret key..."}
+            placeholder={isRsa ? publicKeyPlaceholder : secretKeyPlaceholder}
             className="w-full p-2.5 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[80px] resize-y"
             spellCheck={false}
           />
@@ -193,12 +210,12 @@ export default function SignVerifyClient() {
 
       {/* Received signature */}
       <div>
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 block">Received Signature</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 block">{receivedSigLabel}</label>
         <input
           type="text"
           value={receivedSig}
           onChange={(e) => setReceivedSig(e.target.value)}
-          placeholder="Paste the signature you received from the payment gateway..."
+          placeholder={sigPlaceholder}
           className="w-full p-2.5 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
           spellCheck={false}
         />
@@ -216,7 +233,7 @@ export default function SignVerifyClient() {
           </div>
           <div>
             <div className="text-lg font-bold" style={{ color: result.match === true ? "#16a34a" : result.match === false ? "#dc2626" : "#6b7280" }}>
-              {result.match === true ? "Signature Matches!" : result.match === false ? "Signature Does NOT Match" : "Enter data to verify"}
+              {result.match === true ? matchLabel : result.match === false ? noMatchLabel : enterDataLabel}
             </div>
             {result.match === false && (
               <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -229,12 +246,12 @@ export default function SignVerifyClient() {
         {result.computed && (
           <div className="space-y-2">
             <div className="p-2 rounded bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-              <div className="text-[10px] text-gray-400 mb-1">Computed Signature</div>
+              <div className="text-[10px] text-gray-400 mb-1">{computedSigLabel}</div>
               <code className="text-xs font-mono text-gray-900 dark:text-gray-100 break-all">{result.computed}</code>
             </div>
             {receivedSig && (
               <div className="p-2 rounded bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                <div className="text-[10px] text-gray-400 mb-1">Received Signature</div>
+                <div className="text-[10px] text-gray-400 mb-1">{receivedSigLabel}</div>
                 <code className="text-xs font-mono text-gray-900 dark:text-gray-100 break-all">{receivedSig}</code>
               </div>
             )}

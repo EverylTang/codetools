@@ -69,6 +69,8 @@ export default function JsonYamlClient() {
     }
   }, [result.output]);
 
+  const copyLabel = tk.copy || "Copy";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Mode switch */}
@@ -76,23 +78,23 @@ export default function JsonYamlClient() {
         <button
           onClick={() => { setMode("json2yaml"); setInput(DEFAULT_JSON); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "json2yaml" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >JSON → YAML</button>
+        >{tk.jsonToYaml || "JSON → YAML"}</button>
         <button
           onClick={() => { setMode("yaml2json"); setInput(DEFAULT_YAML); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "yaml2json" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >YAML → JSON</button>
+        >{tk.yamlToJson || "YAML → JSON"}</button>
       </div>
 
       {/* Input / Output */}
       <div className="flex flex-1 flex-col sm:flex-row gap-4 min-h-[300px]">
         <div className="flex-1 flex flex-col">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
-            {mode === "json2yaml" ? "JSON Input" : "YAML Input"}
+            {mode === "json2yaml" ? (tk.jsonInput || "JSON Input") : (tk.yamlInput || "YAML Input")}
           </label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={mode === "json2yaml" ? "Paste JSON here..." : "Paste YAML here..."}
+            placeholder={mode === "json2yaml" ? (tk.pasteJson || "Paste JSON here...") : (tk.pasteYaml || "Paste YAML here...")}
             className="flex-1 min-h-[200px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
@@ -100,11 +102,11 @@ export default function JsonYamlClient() {
         <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-1">
             <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
-              {mode === "json2yaml" ? "YAML Output" : "JSON Output"}
+              {mode === "json2yaml" ? (tk.yamlOutput || "YAML Output") : (tk.jsonOutput || "JSON Output")}
             </label>
             {result.output && (
               <button onClick={handleCopy} className="text-[10px] px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">
-                {copied ? "✓" : "Copy"}
+                {copied ? "✓" : copyLabel}
               </button>
             )}
           </div>

@@ -65,16 +65,21 @@ export default function JsonDiffClient() {
     return { same, added, removed, changed };
   }, [diffs]);
 
+  const labelSame = tk.same || "same";
+  const labelChanged = tk.changed || "changed";
+  const labelAdded = tk.added || "added";
+  const labelRemoved = tk.removed || "removed";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Input area */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1 flex flex-col">
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Left JSON</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{tk.leftJson || "Left JSON"}</label>
           <textarea
             value={left}
             onChange={(e) => setLeft(e.target.value)}
-            placeholder="Paste left JSON..."
+            placeholder={tk.pasteLeft || "Paste left JSON..."}
             className="flex-1 min-h-[180px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
@@ -83,17 +88,17 @@ export default function JsonDiffClient() {
           <button
             onClick={swap}
             className="px-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-gray-600 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-            title="Swap"
+            title={tk.swap || "Swap"}
           >
             ⇄
           </button>
         </div>
         <div className="flex-1 flex flex-col">
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Right JSON</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{tk.rightJson || "Right JSON"}</label>
           <textarea
             value={right}
             onChange={(e) => setRight(e.target.value)}
-            placeholder="Paste right JSON..."
+            placeholder={tk.pasteRight || "Paste right JSON..."}
             className="flex-1 min-h-[180px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
@@ -110,10 +115,10 @@ export default function JsonDiffClient() {
       {/* Stats */}
       {diffs.length > 0 && (
         <div className="flex gap-3 text-xs">
-          <span className="px-2 py-0.5 rounded bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400">{stats.same} same</span>
-          <span className="px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400">{stats.changed} changed</span>
-          <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">{stats.added} added</span>
-          <span className="px-2 py-0.5 rounded bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">{stats.removed} removed</span>
+          <span className="px-2 py-0.5 rounded bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400">{stats.same} {labelSame}</span>
+          <span className="px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400">{stats.changed} {labelChanged}</span>
+          <span className="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">{stats.added} {labelAdded}</span>
+          <span className="px-2 py-0.5 rounded bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">{stats.removed} {labelRemoved}</span>
         </div>
       )}
 

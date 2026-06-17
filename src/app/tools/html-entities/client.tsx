@@ -50,15 +50,12 @@ function encodeHtml(text: string): string {
 }
 
 function decodeHtml(text: string): string {
-  // Handle named entities
   let result = text;
   for (const [entity, char] of Object.entries(DECODE_MAP)) {
     result = result.split(entity).join(char);
   }
-  // Handle numeric entities
   result = result.replace(/&#(\d+);/g, (_, num) => String.fromCharCode(parseInt(num)));
   result = result.replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
-  // Also use browser's built-in decoder for any remaining entities
   const textarea = document.createElement("textarea");
   textarea.innerHTML = result;
   return textarea.value;
@@ -88,6 +85,10 @@ export default function HtmlEntitiesClient() {
     }
   }, [output]);
 
+  const copyLabel = tk.copy || "Copy";
+  const encodeLabel = tk.encode || "Encode";
+  const decodeLabel = tk.decode || "Decode";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Mode switch */}
@@ -95,23 +96,23 @@ export default function HtmlEntitiesClient() {
         <button
           onClick={() => { setMode("encode"); setInput(DEFAULT_TEXT); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "encode" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >Encode</button>
+        >{encodeLabel}</button>
         <button
           onClick={() => { setMode("decode"); setInput(encodeHtml(DEFAULT_TEXT)); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "decode" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >Decode</button>
+        >{decodeLabel}</button>
       </div>
 
       {/* Input / Output */}
       <div className="flex flex-1 flex-col sm:flex-row gap-4 min-h-[300px]">
         <div className="flex-1 flex flex-col">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
-            {mode === "encode" ? "Text Input" : "HTML Entities Input"}
+            {mode === "encode" ? (tk.textInput || "Text Input") : (tk.htmlEntitiesInput || "HTML Entities Input")}
           </label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={mode === "encode" ? "Paste HTML or text..." : "Paste HTML entities..."}
+            placeholder={mode === "encode" ? (tk.pasteHtml || "Paste HTML or text...") : (tk.pasteEntities || "Paste HTML entities...")}
             className="flex-1 min-h-[200px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
@@ -119,11 +120,11 @@ export default function HtmlEntitiesClient() {
         <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-1">
             <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
-              {mode === "encode" ? "HTML Entities" : "Decoded Text"}
+              {mode === "encode" ? (tk.htmlEntitiesOutput || "HTML Entities") : (tk.textOutput || "Decoded Text")}
             </label>
             {output && (
               <button onClick={handleCopy} className="text-[10px] px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">
-                {copied ? "✓" : "Copy"}
+                {copied ? "✓" : copyLabel}
               </button>
             )}
           </div>

@@ -10,30 +10,24 @@ function formatXml(xml: string, indent: number): string {
   let pad = 0;
   const indentStr = " ".repeat(indent);
 
-  // Remove whitespace between tags
   xml = xml.replace(/>\s*</g, "><");
-  // Tokenize
   const tokens = xml.split(/(<[^>]+>)/g).filter(Boolean);
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
 
     if (token.startsWith("<?") || token.startsWith("<!")) {
-      // Processing instruction / doctype
       formatted += indentStr.repeat(pad) + token + "\n";
     } else if (token.startsWith("</")) {
-      // Closing tag
       pad = Math.max(0, pad - 1);
       formatted += indentStr.repeat(pad) + token + "\n";
     } else if (token.startsWith("<")) {
-      // Opening tag
       const isSelfClosing = token.endsWith("/>");
       formatted += indentStr.repeat(pad) + token + "\n";
       if (!isSelfClosing) {
         pad++;
       }
     } else {
-      // Text content
       const trimmed = token.trim();
       if (trimmed) {
         formatted += indentStr.repeat(pad) + trimmed + "\n";
@@ -96,6 +90,16 @@ export default function XmlFormatterClient() {
     }
   }, [result]);
 
+  const copyLabel = tk.copy || "Copy";
+  const formatLabel = tk.format || "Format";
+  const compressLabel = tk.compress || "Compress";
+  const indentLabel = tk.indent || "Indent";
+  const spacesLabel = tk.spaces || "spaces";
+  const xmlInputLabel = tk.xmlInput || "XML Input";
+  const pasteXmlLabel = tk.pasteXml || "Paste your XML here...";
+  const validXmlLabel = tk.validXml || "Valid XML";
+  const invalidXmlLabel = tk.invalidXml || "Invalid XML";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Toolbar */}
@@ -104,24 +108,24 @@ export default function XmlFormatterClient() {
           <button
             onClick={() => setView("formatted")}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${view === "formatted" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-          >Format</button>
+          >{formatLabel}</button>
           <button
             onClick={() => setView("minified")}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${view === "minified" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-          >Compress</button>
+          >{compressLabel}</button>
         </div>
 
         <div className="flex items-center gap-2">
           {view === "formatted" && (
             <div className="flex items-center gap-1.5">
-              <label className="text-[10px] text-gray-500 dark:text-gray-400">Indent</label>
+              <label className="text-[10px] text-gray-500 dark:text-gray-400">{indentLabel}</label>
               <select
                 value={indentSize}
                 onChange={(e) => setIndentSize(Number(e.target.value))}
                 className="text-xs p-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300"
               >
                 {[2, 4, 8].map(n => (
-                  <option key={n} value={n}>{n} spaces</option>
+                  <option key={n} value={n}>{n} {spacesLabel}</option>
                 ))}
               </select>
             </div>
@@ -131,7 +135,7 @@ export default function XmlFormatterClient() {
             disabled={!result}
             className="px-2.5 py-1.5 text-xs font-medium rounded-md border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
           >
-            {copied ? "✓ Copied" : "Copy"}
+            {copied ? "✓ Copied" : copyLabel}
           </button>
           <button
             onClick={() => setInput("")}
@@ -143,25 +147,25 @@ export default function XmlFormatterClient() {
       {/* Validation status */}
       {input.trim() && (
         <div className={`text-[10px] font-medium px-2 py-1 rounded w-fit ${validation.valid ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400" : "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"}`}>
-          {validation.valid ? "✓ Valid XML" : "✗ Invalid XML"}
+          {validation.valid ? `✓ ${validXmlLabel}` : `✗ ${invalidXmlLabel}`}
         </div>
       )}
 
       {/* Input / Output */}
       <div className="flex flex-1 flex-col sm:flex-row gap-4 min-h-[300px]">
         <div className="flex-1 flex flex-col">
-          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">XML Input</label>
+          <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{xmlInputLabel}</label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste your XML here..."
+            placeholder={pasteXmlLabel}
             className="flex-1 min-h-[200px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
         </div>
         <div className="flex-1 flex flex-col">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
-            {view === "formatted" ? "Formatted XML" : "Compressed XML"}
+            {view === "formatted" ? (tk.formattedXml || "Formatted XML") : (tk.minifiedXml || "Compressed XML")}
           </label>
           <textarea
             value={result}

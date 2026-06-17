@@ -24,7 +24,6 @@ function csvToJson(csv: string): any[] {
   if (lines.length < 2) return [];
   const headers = lines[0].split(",").map(h => h.trim());
   return lines.slice(1).map(line => {
-    // Simple CSV parser (handles quoted fields)
     const values: string[] = [];
     let current = "";
     let inQuotes = false;
@@ -79,6 +78,8 @@ export default function JsonCsvClient() {
     }
   }, [result.output]);
 
+  const copyLabel = tk.copy || "Copy";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Mode switch */}
@@ -86,23 +87,23 @@ export default function JsonCsvClient() {
         <button
           onClick={() => { setMode("json2csv"); setInput(DEFAULT_JSON); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "json2csv" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >JSON → CSV</button>
+        >{tk.jsonToCsv || "JSON → CSV"}</button>
         <button
           onClick={() => { setMode("csv2json"); setInput(DEFAULT_CSV); }}
           className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "csv2json" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-        >CSV → JSON</button>
+        >{tk.csvToJson || "CSV → JSON"}</button>
       </div>
 
       {/* Input / Output */}
       <div className="flex flex-1 flex-col sm:flex-row gap-4 min-h-[300px]">
         <div className="flex-1 flex flex-col">
           <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
-            {mode === "json2csv" ? "JSON Input" : "CSV Input"}
+            {mode === "json2csv" ? (tk.jsonInput || "JSON Input") : (tk.csvInput || "CSV Input")}
           </label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={mode === "json2csv" ? "Paste JSON array..." : "Paste CSV data..."}
+            placeholder={mode === "json2csv" ? (tk.pasteJsonArray || "Paste JSON array...") : (tk.pasteCsvData || "Paste CSV data...")}
             className="flex-1 min-h-[200px] p-3 text-sm font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
             spellCheck={false}
           />
@@ -110,11 +111,11 @@ export default function JsonCsvClient() {
         <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-1">
             <label className="text-xs font-medium text-gray-500 dark:text-gray-400">
-              {mode === "json2csv" ? "CSV Output" : "JSON Output"}
+              {mode === "json2csv" ? (tk.csvOutput || "CSV Output") : (tk.jsonOutput || "JSON Output")}
             </label>
             {result.output && (
               <button onClick={handleCopy} className="text-[10px] px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">
-                {copied ? "✓" : "Copy"}
+                {copied ? "✓" : copyLabel}
               </button>
             )}
           </div>

@@ -81,6 +81,23 @@ export default function PaymentDebugClient() {
     }
   }, [endpoint, action, platform, apiKey, requestBody]);
 
+  const apiActionLabel = tk.apiAction || "API Action";
+  const baseUrlLabel = tk.baseUrl || "Base URL";
+  const baseUrlPlaceholder = tk.baseUrlPlaceholder || "https://api.example.com";
+  const apiKeyLabel = tk.apiKey || "API Key";
+  const apiKeyPlaceholder = tk.apiKeyPlaceholder || "Enter your API key...";
+  const secretKeyLabel = tk.secretKey || "Secret Key";
+  const secretKeyPlaceholder = tk.secretKeyPlaceholder || "Enter secret key for signing...";
+  const requestBodyLabel = tk.requestBody || "Request Body";
+  const responseLabel = tk.response || "Response";
+  const curlCommandLabel = tk.curlCommand || "cURL Command";
+  const sendRequestLabel = tk.sendRequest || "Send Request";
+  const sendingLabel = tk.sending || "Sending...";
+  const copyCurlLabel = tk.copyCurl || "Copy cURL";
+  const statusLabel = tk.status || "Status";
+  const timeLabel = tk.time || "Time";
+  const msLabel = tk.ms || "ms";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Platform + Action */}
@@ -98,7 +115,7 @@ export default function PaymentDebugClient() {
 
       {/* API Action */}
       <div className="flex flex-wrap gap-1.5">
-        <label className="text-[10px] text-gray-400 w-full">API Action</label>
+        <label className="text-[10px] text-gray-400 w-full">{apiActionLabel}</label>
         {API_ACTIONS[platform].map((a) => (
           <button
             key={a.key}
@@ -114,32 +131,32 @@ export default function PaymentDebugClient() {
       {/* Endpoint + Keys */}
       <div className="grid gap-2 sm:grid-cols-3">
         <div>
-          <label className="text-[10px] text-gray-400 mb-0.5 block">Base URL</label>
+          <label className="text-[10px] text-gray-400 mb-0.5 block">{baseUrlLabel}</label>
           <input
             type="text"
             value={endpoint}
             onChange={(e) => setEndpoint(e.target.value)}
-            placeholder={platform === "alipay" ? "https://openapi.alipay.com" : platform === "wechat" ? "https://api.mch.weixin.qq.com" : "https://api.stripe.com"}
+            placeholder={baseUrlPlaceholder}
             className="w-full p-2 text-xs font-mono border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label className="text-[10px] text-gray-400 mb-0.5 block">{platform === "stripe" ? "Secret Key" : "API Key"}</label>
+          <label className="text-[10px] text-gray-400 mb-0.5 block">{platform === "stripe" ? secretKeyLabel : apiKeyLabel}</label>
           <input
             type="password"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
-            placeholder={platform === "stripe" ? "sk_live_xxx" : "your_api_key"}
+            placeholder={platform === "stripe" ? "sk_live_xxx" : apiKeyPlaceholder}
             className="w-full p-2 text-xs font-mono border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label className="text-[10px] text-gray-400 mb-0.5 block">Sign Key</label>
+          <label className="text-[10px] text-gray-400 mb-0.5 block">{secretKeyLabel}</label>
           <input
             type="password"
             value={secretKey}
             onChange={(e) => setSecretKey(e.target.value)}
-            placeholder="HMAC/RSA signing key"
+            placeholder={secretKeyPlaceholder}
             className="w-full p-2 text-xs font-mono border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
@@ -147,7 +164,7 @@ export default function PaymentDebugClient() {
 
       {/* Request Body */}
       <div className="flex flex-col">
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Request Body</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{requestBodyLabel}</label>
         <textarea
           value={requestBody}
           onChange={(e) => setRequestBody(e.target.value)}
@@ -158,7 +175,7 @@ export default function PaymentDebugClient() {
 
       {/* cURL preview */}
       <details>
-        <summary className="text-xs text-gray-500 dark:text-gray-400 cursor-pointer">cURL Preview</summary>
+        <summary className="text-xs text-gray-500 dark:text-gray-400 cursor-pointer">{curlCommandLabel}</summary>
         <pre className="mt-2 p-3 text-xs font-mono bg-gray-900 text-green-400 rounded-lg overflow-x-auto whitespace-pre-wrap">{curlCommand}</pre>
       </details>
 
@@ -168,7 +185,7 @@ export default function PaymentDebugClient() {
         disabled={sending || !endpoint}
         className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors w-fit"
       >
-        {sending ? "Sending..." : "Send Request"}
+        {sending ? sendingLabel : sendRequestLabel}
       </button>
 
       {/* Response */}
@@ -179,7 +196,7 @@ export default function PaymentDebugClient() {
               <span className={`text-xs font-bold px-2 py-0.5 rounded ${response.status >= 200 && response.status < 300 ? "bg-green-100 dark:bg-green-900/30 text-green-700" : "bg-red-100 dark:bg-red-900/30 text-red-700"}`}>
                 {response.status || "ERR"}
               </span>
-              <span className="text-[10px] text-gray-400">{response.time}ms</span>
+              <span className="text-[10px] text-gray-400">{response.time}{msLabel}</span>
             </div>
           </div>
           <pre className="p-3 text-xs font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap max-h-[300px] overflow-auto">

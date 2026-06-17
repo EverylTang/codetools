@@ -35,7 +35,6 @@ export default function UlidGeneratorClient() {
     setTimeout(() => setCopiedIndex(null), 2000);
   };
 
-  // Decode a ULID to show its timestamp
   const decodeUlid = (id: string) => {
     try {
       const CrockfordBase32 = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
@@ -49,12 +48,20 @@ export default function UlidGeneratorClient() {
     }
   };
 
+  const countLabel = tk.count || "Count";
+  const standardLabel = tk.standard || "Standard";
+  const monotonicLabel = tk.monotonic || "Monotonic";
+  const generateLabel = tk.generate || "Generate";
+  const copyAllLabel = tk.copyAll || "Copy All";
+  const copyLabel = tk.copy || "Copy";
+  const emptyStateLabel = tk.emptyState || "Click Generate to create ULIDs";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-1.5">
-          <label className="text-[10px] text-gray-500 dark:text-gray-400">Count</label>
+          <label className="text-[10px] text-gray-500 dark:text-gray-400">{countLabel}</label>
           <select
             value={count}
             onChange={(e) => setCount(Number(e.target.value))}
@@ -69,19 +76,19 @@ export default function UlidGeneratorClient() {
           <button
             onClick={() => setMode("standard")}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "standard" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-          >Standard</button>
+          >{standardLabel}</button>
           <button
             onClick={() => setMode("monotonic")}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${mode === "monotonic" ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm" : "text-gray-600 dark:text-gray-400"}`}
-          >Monotonic</button>
+          >{monotonicLabel}</button>
         </div>
         <button
           onClick={generate}
           className="px-4 py-1.5 text-sm font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-        >Generate</button>
+        >{generateLabel}</button>
         {ulids.length > 0 && (
           <button onClick={copyAll} className="px-2.5 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-            {copied ? "✓" : "Copy All"}
+            {copied ? "✓" : copyAllLabel}
           </button>
         )}
       </div>
@@ -102,7 +109,7 @@ export default function UlidGeneratorClient() {
                   onClick={() => copyOne(id, i)}
                   className="px-2 py-0.5 text-[10px] rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
                 >
-                  {copiedIndex === i ? "✓" : "Copy"}
+                  {copiedIndex === i ? "✓" : copyLabel}
                 </button>
               </div>
             );
@@ -110,14 +117,14 @@ export default function UlidGeneratorClient() {
         </div>
       ) : (
         <div className="flex-1 flex items-center justify-center text-sm text-gray-400 dark:text-gray-500">
-          Click Generate to create ULIDs
+          {emptyStateLabel}
         </div>
       )}
 
       {/* Info */}
       <div className="text-[10px] text-gray-400 dark:text-gray-500 space-y-1">
-        <p><strong>ULID</strong> = 26-char, Crockford Base32 encoded, 128-bit. 10 chars timestamp + 16 chars randomness.</p>
-        <p><strong>Standard</strong>: Fully random suffix. <strong>Monotonic</strong>: Incrementing suffix within the same millisecond (better for DB indexes).</p>
+        <p><strong>ULID</strong> = {tk.infoFormat || "26-char, Crockford Base32 encoded, 128-bit. 10 chars timestamp + 16 chars randomness."}</p>
+        <p><strong>{standardLabel}</strong>: {tk.infoModes ? tk.infoModes.split(". ")[0] + "." : "Fully random suffix."} <strong>{monotonicLabel}</strong>: {tk.infoModes ? tk.infoModes.split(". ")[1] || "" : "Incrementing suffix within the same millisecond (better for DB indexes)."}</p>
         <p>Comparison: UUID v4: 36 chars · UUID v7: 36 chars · ULID: 26 chars. ULID is URL-safe and case-insensitive.</p>
       </div>
     </div>

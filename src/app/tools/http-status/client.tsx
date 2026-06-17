@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 interface StatusCode {
   code: number;
@@ -74,12 +75,23 @@ const STATUS_CODES: StatusCode[] = [
   { code: 511, name: "Network Authentication Required", description: "The client needs to authenticate to gain network access.", category: "5xx Server Error" },
 ];
 
-const CATEGORIES = ["All", "1xx Informational", "2xx Success", "3xx Redirection", "4xx Client Error", "5xx Server Error"];
+const CATEGORY_KEYS = ["1xx Informational", "2xx Success", "3xx Redirection", "4xx Client Error", "5xx Server Error"];
 
 export default function HttpStatusClient() {
+  const { t } = useI18n();
+  const tk = (t as any).tools?.["http-status"] || {};
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [copied, setCopied] = useState<number | null>(null);
+
+  const categoryLabels: Record<string, string> = {
+    "All": tk.allCategories || "All",
+    "1xx Informational": tk.category1xx || "1xx Informational",
+    "2xx Success": tk.category2xx || "2xx Success",
+    "3xx Redirection": tk.category3xx || "3xx Redirection",
+    "4xx Client Error": tk.category4xx || "4xx Client Error",
+    "5xx Server Error": tk.category5xx || "5xx Server Error",
+  };
 
   const filtered = useMemo(() => {
     return STATUS_CODES.filter(s => {
@@ -103,6 +115,9 @@ export default function HttpStatusClient() {
     return "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300";
   };
 
+  const copyLabel = tk.copy || "Copy";
+  const searchPlaceholder = tk.searchPlaceholder || "Search by code or name...";
+
   return (
     <div className="flex flex-col flex-1 gap-4">
       {/* Search & Filter */}
@@ -111,7 +126,7 @@ export default function HttpStatusClient() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by code or name..."
+          placeholder={searchPlaceholder}
           className="flex-1 p-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
         <select
@@ -119,7 +134,7 @@ export default function HttpStatusClient() {
           onChange={(e) => setCategory(e.target.value)}
           className="w-48 p-2 text-xs border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300"
         >
-          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+          {["All", ...CATEGORY_KEYS].map(c => <option key={c} value={c}>{categoryLabels[c] || c}</option>)}
         </select>
       </div>
 
@@ -139,13 +154,13 @@ export default function HttpStatusClient() {
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{status.name}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded ${getCategoryColor(status.category)}`}>
-                    {status.category}
+                    {categoryLabels[status.category] || status.category}
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{status.description}</p>
               </div>
               {copied === status.code && (
-                <span className="text-[10px] text-green-500 shrink-0">Copied!</span>
+                <span className="text-[10px] text-green-500 shrink-0">{copyLabel}!</span>
               )}
             </div>
           ))}
