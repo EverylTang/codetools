@@ -4,6 +4,11 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Git Command Builder", slug: "git-command", desc: "Build Git commands visually. Generate clone, commit, push, branch, merge, rebase commands with options.", icon: "🔀" },
+  { name: "Docker Command Builder", slug: "docker-command", desc: "Build Docker commands visually. Generate docker run, build, exec, and more commands with options.", icon: "🐳" },
+  { name: ".env Generator", slug: "env-generator", desc: "Generate and manage .env files. Add variables, validate format, and export for different environments.", icon: "⚙️" },
+  { name: "SSH Key Generator", slug: "ssh-key-generator", desc: "Generate SSH key pairs (Ed25519, RSA) directly in your browser. Download keys in PEM format.", icon: "🔑" },
+  { name: "Random Data Generator", slug: "random-data-generator", desc: "Generate random mock data for testing. Create datasets with names, emails, dates, and custom fields.", icon: "🎲" },
   { name: "Base64 File Converter", slug: "base64-file", desc: "Convert files to Base64 data URIs and decode Base64 back to editable files. Supports images, PDFs.", icon: "📁" },
   { name: "Text Diff", slug: "text-diff", desc: "Compare two texts line by line with color-coded diff highlighting. Unified and split view.", icon: "🔍" },
   { name: "Bcrypt Hash & Verify", slug: "bcrypt", desc: "Generate bcrypt password hashes and verify passwords. Adjustable cost factor.", icon: "🔒" },

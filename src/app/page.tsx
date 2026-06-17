@@ -1,9 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Git Command Builder", slug: "git-command", icon: "🔀" },
+  { name: "Docker Command Builder", slug: "docker-command", icon: "🐳" },
+  { name: ".env Generator", slug: "env-generator", icon: "⚙️" },
+  { name: "SSH Key Generator", slug: "ssh-key-generator", icon: "🔑" },
+  { name: "Random Data Generator", slug: "random-data-generator", icon: "🎲" },
   { name: "Base64 File Converter", slug: "base64-file", icon: "📁" },
   { name: "Text Diff", slug: "text-diff", icon: "🔍" },
   { name: "Bcrypt Hash & Verify", slug: "bcrypt", icon: "🔒" },
@@ -57,7 +63,7 @@ const categories = [
   {
     title: "Encoding & Hashing",
     titleZh: "编码与哈希",
-    tools: ["base64", "base64-file", "hash-generator", "hmac-generator", "url-encode", "html-entities", "jwt-decoder", "bcrypt", "aes-cipher"],
+    tools: ["base64", "base64-file", "hash-generator", "hmac-generator", "url-encode", "html-entities", "jwt-decoder", "bcrypt", "aes-cipher", "ssh-key-generator"],
   },
   {
     title: "Formatters",
@@ -72,7 +78,7 @@ const categories = [
   {
     title: "Generators",
     titleZh: "生成器",
-    tools: ["uuid", "password", "qr-code", "rsa-key-generator", "cron", "markdown-preview", "ulid-generator", "lorem-ipsum"],
+    tools: ["uuid", "password", "qr-code", "rsa-key-generator", "cron", "markdown-preview", "ulid-generator", "lorem-ipsum", "git-command", "docker-command", "env-generator", "random-data-generator"],
   },
   {
     title: "Network & Reference",
@@ -87,6 +93,17 @@ export default function HomePage() {
   const tt = (t as any).tools || {};
   const tp = tt.page || {};
   const toolMap = Object.fromEntries(tools.map((t) => [t.slug, t]));
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredCategories = categories.map((cat) => ({
+    ...cat,
+    tools: cat.tools.filter((slug) => {
+      const tool = toolMap[slug];
+      const tdata = tt[slug];
+      const searchable = `${tool?.name} ${tdata?.title || ""} ${slug}`.toLowerCase();
+      return searchable.includes(searchQuery.toLowerCase());
+    }),
+  })).filter((cat) => cat.tools.length > 0);
 
   return (
     <div className="flex flex-col">
@@ -99,8 +116,8 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             {isZh
-              ? "42 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
-              : "42 developer tools that run entirely in your browser. No data uploads, no signup required."}
+              ? "47 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
+              : "47 developer tools that run entirely in your browser. No data uploads, no signup required."}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -112,9 +129,33 @@ export default function HomePage() {
           </div>
           <div className="mt-6 text-xs text-gray-400 dark:text-gray-500">
             {isZh
-              ? `✅ 42 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
-              : `✅ 42 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
+              ? `✅ 47 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
+              : `✅ 47 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
           </div>
+        </div>
+      </section>
+
+      {/* Search */}
+      <section className="max-w-4xl mx-auto px-4 py-8 w-full">
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={isZh ? "搜索工具..." : "Search tools..."}
+            className="w-full px-4 py-3 pl-10 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 transition-all"
+          />
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              ✕
+            </button>
+          )}
         </div>
       </section>
 
@@ -124,7 +165,7 @@ export default function HomePage() {
           {isZh ? "所有工具" : "All Tools"}
         </h2>
         <div className="space-y-10">
-          {categories.map((cat) => (
+          {filteredCategories.map((cat) => (
             <div key={cat.title}>
               <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">
                 {isZh ? cat.titleZh : cat.title}
