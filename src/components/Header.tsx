@@ -38,14 +38,6 @@ export default function Header() {
           >
             {locale === "zh" ? "EN" : "中"}
           </button>
-          <a
-            href="https://github.com/EverylTang/codetools"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 dark:hover:text-gray-200 transition-colors hidden sm:inline"
-          >
-            GitHub
-          </a>
         </nav>
       </div>
     </header>
