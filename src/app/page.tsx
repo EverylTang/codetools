@@ -4,6 +4,20 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Signature Verification", slug: "sign-verify", icon: "✓" },
+  { name: "Webhook Receiver", slug: "webhook-receiver", icon: "📡" },
+  { name: "Payment API Debugger", slug: "payment-debug", icon: "🐛" },
+  { name: "HTTP Status Codes", slug: "http-status", icon: "🌐" },
+  { name: "ULID Generator", slug: "ulid-generator", icon: "🆔" },
+  { name: "JSON to Code", slug: "json-to-code", icon: "🔧" },
+  { name: "JWT Decoder", slug: "jwt-decoder", icon: "🔐" },
+  { name: "JSON Diff", slug: "json-diff", icon: "🔍" },
+  { name: "JSON ↔ CSV", slug: "json-csv", icon: "📊" },
+  { name: "JSON ↔ YAML", slug: "json-yaml", icon: "📝" },
+  { name: "SQL Formatter", slug: "sql-formatter", icon: "🗄" },
+  { name: "Case Converter", slug: "case-converter", icon: "Aa" },
+  { name: "HTML Entities", slug: "html-entities", icon: "🌐" },
+  { name: "XML Formatter", slug: "xml-formatter", icon: "📋" },
   { name: "Base64 Encode/Decode", slug: "base64", icon: "🔐" },
   { name: "Hash Generator", slug: "hash-generator", icon: "🔑" },
   { name: "Timestamp Converter", slug: "timestamp", icon: "⏰" },
@@ -27,34 +41,34 @@ const tools = [
 
 const categories = [
   {
+    title: "Payment & Finance",
+    titleZh: "支付与金融",
+    tools: ["payment-webhook", "acquiring-margin-calculator", "sign-verify", "webhook-receiver", "payment-debug"],
+  },
+  {
     title: "Encoding & Hashing",
     titleZh: "编码与哈希",
-    tools: ["base64", "hash-generator", "hmac-generator", "url-encode"],
+    tools: ["base64", "hash-generator", "hmac-generator", "url-encode", "html-entities", "jwt-decoder"],
+  },
+  {
+    title: "Formatters",
+    titleZh: "格式化",
+    tools: ["json-formatter", "sql-formatter", "xml-formatter", "json-diff", "word-counter", "color-converter", "regex-tester"],
+  },
+  {
+    title: "Converters",
+    titleZh: "数据转换",
+    tools: ["json-csv", "json-yaml", "case-converter", "timestamp", "currency-converter", "json-to-code"],
   },
   {
     title: "Generators",
     titleZh: "生成器",
-    tools: ["uuid", "password", "qr-code", "rsa-key-generator"],
+    tools: ["uuid", "password", "qr-code", "rsa-key-generator", "cron", "markdown-preview", "ulid-generator"],
   },
   {
-    title: "Formatting & Analysis",
-    titleZh: "格式化与分析",
-    tools: ["json-formatter", "word-counter", "color-converter", "regex-tester"],
-  },
-  {
-    title: "Developer Utilities",
-    titleZh: "开发工具",
-    tools: ["timestamp", "currency-converter", "cron", "markdown-preview"],
-  },
-  {
-    title: "Payment & Finance",
-    titleZh: "支付与金融",
-    tools: ["payment-webhook", "acquiring-margin-calculator"],
-  },
-  {
-    title: "Network & Tunnel",
-    titleZh: "网络与隧道",
-    tools: ["tunnel-config"],
+    title: "Network & Reference",
+    titleZh: "网络与参考",
+    tools: ["tunnel-config", "http-status"],
   },
 ];
 
@@ -76,8 +90,8 @@ export default function HomePage() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             {isZh
-              ? "19 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
-              : "19 developer tools that run entirely in your browser. No data uploads, no signup required."}
+              ? "33 款开发者工具，全部在浏览器中运行。无需上传数据，无需注册，即开即用。"
+              : "33 developer tools that run entirely in your browser. No data uploads, no signup required."}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -89,8 +103,8 @@ export default function HomePage() {
           </div>
           <div className="mt-6 text-xs text-gray-400 dark:text-gray-500">
             {isZh
-              ? `✅ 19 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
-              : `✅ 19 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
+              ? `✅ 33 个工具 · 纯前端计算 · 支持中英文切换 · ${tp?.tagline || ""}`
+              : `✅ 33 tools · Client-side only · ${tp?.tagline || ""} · No server upload`}
           </div>
         </div>
       </section>

@@ -4,6 +4,20 @@ import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const tools = [
+  { name: "Signature Verification", slug: "sign-verify", desc: "Verify payment and API signatures. Compare computed HMAC/RSA signatures with received values.", icon: "✓" },
+  { name: "Webhook Receiver", slug: "webhook-receiver", desc: "Create a temporary webhook endpoint to receive and inspect real-time payment callbacks.", icon: "📡" },
+  { name: "Payment API Debugger", slug: "payment-debug", desc: "Construct, sign, send, and inspect payment API requests. Full debugging workflow.", icon: "🐛" },
+  { name: "HTTP Status Codes", slug: "http-status", desc: "Complete reference of all HTTP status codes. Browse 1xx–5xx with descriptions.", icon: "🌐" },
+  { name: "ULID Generator", slug: "ulid-generator", desc: "Generate time-ordered, sortable ULIDs. URL-safe, 26 chars, batch generation.", icon: "🆔" },
+  { name: "JSON to Code", slug: "json-to-code", desc: "Convert JSON to typed code in 8 languages. TypeScript, Go, Python, Java, and more.", icon: "🔧" },
+  { name: "JWT Decoder", slug: "jwt-decoder", desc: "Decode and inspect JWT tokens. View header and payload claims in a readable JSON tree.", icon: "🔐" },
+  { name: "JSON Diff", slug: "json-diff", desc: "Compare two JSON objects side by side with visual diff highlighting.", icon: "🔍" },
+  { name: "JSON ↔ CSV", slug: "json-csv", desc: "Convert between JSON arrays and CSV format. Supports JSONL format.", icon: "📊" },
+  { name: "JSON ↔ YAML", slug: "json-yaml", desc: "Convert between JSON and YAML. Perfect for config files and API specs.", icon: "📝" },
+  { name: "SQL Formatter", slug: "sql-formatter", desc: "Format and beautify SQL queries. Supports MySQL, PostgreSQL, SQLite, and more.", icon: "🗄" },
+  { name: "Case Converter", slug: "case-converter", desc: "Convert text between camelCase, snake_case, kebab-case, and 10+ other styles.", icon: "Aa" },
+  { name: "HTML Entities", slug: "html-entities", desc: "Encode or decode HTML entities. Convert special characters to HTML entities and back.", icon: "🌐" },
+  { name: "XML Formatter", slug: "xml-formatter", desc: "Format, validate, and compress XML documents with adjustable indentation.", icon: "📋" },
   { name: "Base64 Encode/Decode", slug: "base64", desc: "Encode and decode Base64 text, or convert files to Base64 data URIs.", icon: "🔐" },
   { name: "Hash Generator", slug: "hash-generator", desc: "Generate MD5, SHA1, SHA256, SHA384, and SHA512 hashes instantly.", icon: "🔑" },
   { name: "Timestamp Converter", slug: "timestamp", desc: "Convert between Unix timestamps and human-readable dates in any timezone.", icon: "⏰" },

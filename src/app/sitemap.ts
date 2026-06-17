@@ -1,6 +1,20 @@
 import { MetadataRoute } from "next";
 
 const tools = [
+  "sign-verify",
+  "webhook-receiver",
+  "payment-debug",
+  "http-status",
+  "ulid-generator",
+  "json-to-code",
+  "jwt-decoder",
+  "json-diff",
+  "json-csv",
+  "json-yaml",
+  "sql-formatter",
+  "case-converter",
+  "html-entities",
+  "xml-formatter",
   "base64",
   "hash-generator",
   "timestamp",

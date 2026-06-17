@@ -77,7 +77,7 @@ export const translations = {
         description: "Free online tools for developers. All processing happens in your browser. Nothing is sent to any server.",
         home: "Home",
         toolsHome: "Tools",
-        tagline: "19+ free tools for developers",
+        tagline: "33+ free tools for developers",
         footer: "CodeTools Toolbox - Free online developer tools.",
       },
       base64: {
@@ -476,6 +476,76 @@ export const translations = {
         rawView: "Raw View",
         pasteHere: "Paste your JSON here...",
       },
+      "jwt-decoder": {
+        title: "JWT Decoder",
+        description: "Decode and inspect JWT tokens. View header and payload claims in a readable JSON tree. All client-side.",
+        keywords: "jwt decoder,jwt parser,decode jwt,jwt token,jwt inspector,json web token,JWT解析",
+      },
+      "json-diff": {
+        title: "JSON Diff",
+        description: "Compare two JSON objects side by side. Find added, removed, and changed properties with visual diff highlighting.",
+        keywords: "json diff,json compare,json difference,compare json,diff json,JSON对比,JSON差异",
+      },
+      "json-csv": {
+        title: "JSON ↔ CSV",
+        description: "Convert between JSON arrays and CSV format. Also supports JSONL (JSON Lines) format. All client-side processing.",
+        keywords: "json to csv,csv to json,json csv converter,convert json to csv,JSON转CSV,CSV转JSON",
+      },
+      "json-yaml": {
+        title: "JSON ↔ YAML",
+        description: "Convert between JSON and YAML formats. Perfect for config files, API specs, and CI/CD pipelines.",
+        keywords: "json to yaml,yaml to json,json yaml converter,convert json to yaml,JSON转YAML,YAML转JSON",
+      },
+      "sql-formatter": {
+        title: "SQL Formatter",
+        description: "Format and beautify SQL queries. Supports MySQL, PostgreSQL, SQLite, and more dialects.",
+        keywords: "sql formatter,sql prettify,format sql,sql beautifier,sql format,sql formatter online,SQL格式化",
+      },
+      "case-converter": {
+        title: "Case Converter",
+        description: "Convert text between camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more. Real-time conversion.",
+        keywords: "case converter,camel case,snake case,kebab case,pascal case,text case converter,大小写转换",
+      },
+      "html-entities": {
+        title: "HTML Entities",
+        description: "Encode or decode HTML entities. Convert special characters to their HTML entity equivalents and back.",
+        keywords: "html entities,html encode,html decode,html entity encoder,html special chars,HTML实体编码,HTML实体解码",
+      },
+      "xml-formatter": {
+        title: "XML Formatter",
+        description: "Format and beautify XML documents. Indent, validate, and compress XML. All client-side.",
+        keywords: "xml formatter,xml prettify,format xml,xml beautifier,xml format,xml to tree,XML格式化",
+      },
+      "sign-verify": {
+        title: "Signature Verification",
+        description: "Verify payment and API signatures. Compare computed HMAC/RSA signatures with received values. Supports MD5, SHA1, SHA256, SHA512, RSA-SHA256.",
+        keywords: "signature verification,verify hmac,verify rsa signature,payment signature verify,签名验证,签名校验",
+      },
+      "webhook-receiver": {
+        title: "Webhook Receiver",
+        description: "Create a temporary webhook endpoint to receive and inspect payment callbacks. Real-time event display with headers and body inspection.",
+        keywords: "webhook receiver,webhook endpoint,receive webhooks,webhook inspector,callback receiver,webhook接收器,支付回调接收",
+      },
+      "payment-debug": {
+        title: "Payment API Debugger",
+        description: "Complete payment API debugging workflow. Construct, sign, send, and inspect requests. Supports Alipay, WeChat Pay, and Stripe.",
+        keywords: "payment api debugger,payment api tester,payment debug,api debugger,alipay api,wechat pay api,支付API调试",
+      },
+      "http-status": {
+        title: "HTTP Status Codes",
+        description: "Complete reference of all HTTP status codes. Browse 1xx–5xx codes with descriptions. Search by code or keyword.",
+        keywords: "http status codes,http codes,status code reference,http 404,http 500,HTTP状态码",
+      },
+      "ulid-generator": {
+        title: "ULID Generator",
+        description: "Generate ULIDs (Universally Unique Lexicographically Sortable Identifiers). Time-ordered, URL-safe, 26 chars. Batch generation supported.",
+        keywords: "ulid generator,generate ulid,ulid,sortable id,unique id,ulid vs uuid,ULID生成器",
+      },
+      "json-to-code": {
+        title: "JSON to Code",
+        description: "Convert JSON to typed code in 8 languages. TypeScript interfaces, Go structs, Python dataclasses, Java classes, Rust structs, and more.",
+        keywords: "json to code,json to typescript,json to go,json to python,json to java,json converter,JSON转代码",
+      },
     },
   },
   zh: {
@@ -556,7 +626,7 @@ export const translations = {
         description: "免费的在线开发者工具。所有计算都在浏览器中完成，不会向任何服务器发送数据。",
         home: "首页",
         toolsHome: "工具",
-        tagline: "19+ 款免费开发者工具",
+        tagline: "33+ 款免费开发者工具",
         footer: "CodeTools 工具箱 - 免费在线开发者工具。",
       },
       base64: {
@@ -954,6 +1024,76 @@ export const translations = {
         treeView: "树形视图",
         rawView: "原始视图",
         pasteHere: "在此粘贴 JSON...",
+      },
+      "jwt-decoder": {
+        title: "JWT 解析器",
+        description: "解码和检查 JWT 令牌。在可读的 JSON 树中查看 Header 和 Payload 信息。纯客户端处理。",
+        keywords: "jwt解码,jwt解析,jwt令牌,jwt查看器,jwt在线工具,JWT解析",
+      },
+      "json-diff": {
+        title: "JSON 对比",
+        description: "并排对比两个 JSON 对象。通过可视化差异高亮找到新增、删除和变更的属性。",
+        keywords: "json对比,json比较,json差异,json diff,json对比工具,JSON对比",
+      },
+      "json-csv": {
+        title: "JSON ↔ CSV 互转",
+        description: "在 JSON 数组和 CSV 格式之间转换。纯客户端处理，无需上传数据。",
+        keywords: "json转csv,csv转json,json csv转换,json数组转csv,JSON转CSV,CSV转JSON",
+      },
+      "json-yaml": {
+        title: "JSON ↔ YAML 互转",
+        description: "在 JSON 和 YAML 格式之间转换。适用于配置文件、API 规范和 CI/CD 流水线。",
+        keywords: "json转yaml,yaml转json,json yaml转换,json yaml互转,JSON转YAML,YAML转JSON",
+      },
+      "sql-formatter": {
+        title: "SQL 格式化",
+        description: "格式化和美化 SQL 查询。支持 MySQL、PostgreSQL、SQLite 等多种方言。",
+        keywords: "sql格式化,sql美化,format sql,sql beautifier,在线sql格式化,SQL格式化",
+      },
+      "case-converter": {
+        title: "大小写转换",
+        description: "在 camelCase、PascalCase、snake_case、kebab-case、CONSTANT_CASE 等命名风格间转换。实时转换。",
+        keywords: "大小写转换,驼峰命名,蛇形命名,烤肉串命名,命名风格转换,文本大小写转换",
+      },
+      "html-entities": {
+        title: "HTML 实体编解码",
+        description: "编码或解码 HTML 实体。将特殊字符转换为 HTML 实体等价形式或反向转换。",
+        keywords: "html实体,html编码,html解码,html实体编码,html特殊字符,HTML实体编码",
+      },
+      "xml-formatter": {
+        title: "XML 格式化",
+        description: "格式化和美化 XML 文档。缩进、验证和压缩 XML。纯客户端处理。",
+        keywords: "xml格式化,xml美化,format xml,xml beautifier,xml压缩,在线xml格式化,XML格式化",
+      },
+      "sign-verify": {
+        title: "签名验证工作台",
+        description: "验证支付和 API 签名。将计算出的 HMAC/RSA 签名与接收到的签名值进行实时比对。支持 MD5、SHA1、SHA256、SHA512、RSA-SHA256。",
+        keywords: "签名验证,hmac验证,rsa签名验证,支付签名校验,签名比对,签名验证工具",
+      },
+      "webhook-receiver": {
+        title: "Webhook 接收器",
+        description: "创建临时 Webhook 端点来接收和检查支付回调。实时事件展示，支持查看请求头和请求体详情。",
+        keywords: "webhook接收器,webhook端点,webhook测试,webhook检查器,回调接收器,支付回调接收",
+      },
+      "payment-debug": {
+        title: "支付 API 调试器",
+        description: "完整的支付 API 调试工作流。构建签名请求、发送到端点、检查响应。支持支付宝、微信支付和 Stripe。",
+        keywords: "支付api调试,支付api测试,支付调试,api调试器,支付宝api,微信支付api,支付API调试",
+      },
+      "http-status": {
+        title: "HTTP 状态码参考",
+        description: "完整的 HTTP 状态码参考大全。浏览 1xx–5xx 状态码及详细说明。支持按状态码或关键词搜索。",
+        keywords: "http状态码,http codes,状态码参考,http 404,http 500,HTTP状态码",
+      },
+      "ulid-generator": {
+        title: "ULID 生成器",
+        description: "生成 ULID（通用唯一按字典序排序的标识符）。按时间排序、URL 安全、仅 26 字符。支持批量生成。",
+        keywords: "ulid生成器,生成ulid,ulid,可排序id,唯一id,ulid vs uuid,ULID生成器",
+      },
+      "json-to-code": {
+        title: "JSON 转代码",
+        description: "将 JSON 转换为 8 种语言的类型化代码。TypeScript 接口、Go 结构体、Python 数据类、Java 类、Rust 结构体等。",
+        keywords: "json转代码,json转typescript,json转go,json转python,json转java,json转换器,JSON转代码",
       },
     },
   },
