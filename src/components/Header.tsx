@@ -27,9 +27,6 @@ export default function Header() {
           <Link href="/tools" className="hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
             {tp.toolsHome || "Tools"}
           </Link>
-          <Link href="/pricing" className="hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
-            {(t as any).pricing || "Pricing"}
-          </Link>
           <ThemeToggle />
           <button
             onClick={() => setLocale(locale === "zh" ? "en" : "zh")}

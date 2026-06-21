@@ -5,10 +5,29 @@ export const metadata = {
   title: "JSON to Code - Convert JSON to TypeScript, Go, Python, Java & More",
   description: "Convert JSON to typed code in 8 languages: TypeScript, Go, Python, Java, Rust, C#, Swift, Kotlin. Generate interfaces, types, and classes from JSON.",
   keywords: ["json to code", "json to typescript", "json to go", "json to python", "json to java", "json converter", "json to class", "JSON转代码"],
+  alternates: {
+    canonical: "/tools/json-to-code",
+  },
   openGraph: {
+    url: "/tools/json-to-code",
+    siteName: "CodeTools",
     title: "JSON to Code - Free Online JSON to Code Converter",
     description: "Convert JSON to typed code in 8 languages. Generate TypeScript interfaces, Go structs, Python dataclasses, and more.",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeTools - Free Online Developer Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JSON to Code - Convert JSON to TypeScript, Go, Python, Java & More",
+    description: "Convert JSON to typed code in 8 languages: TypeScript, Go, Python, Java, Rust, C#, Swift, Kotlin. Generate interfaces, types, and classes from JSON.",
+    images: ["/og-image.png"],
   },
 };
 

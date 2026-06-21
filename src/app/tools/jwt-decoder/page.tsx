@@ -5,10 +5,29 @@ export const metadata = {
   title: "JWT Decoder - Decode JWT Tokens Online",
   description: "Decode JWT header and payload online. Inspect claims, verify structure, and debug JSON Web Tokens. All client-side, no data leaves your browser.",
   keywords: ["jwt decoder", "jwt parser", "decode jwt", "jwt token", "jwt inspector", "json web token", "JWT解析"],
+  alternates: {
+    canonical: "/tools/jwt-decoder",
+  },
   openGraph: {
+    url: "/tools/jwt-decoder",
+    siteName: "CodeTools",
     title: "JWT Decoder - Free Online JWT Token Decoder",
     description: "Decode and inspect JWT tokens in your browser. View header, payload, and signature. Perfect for debugging API authentication.",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeTools - Free Online Developer Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JWT Decoder - Decode JWT Tokens Online",
+    description: "Decode JWT header and payload online. Inspect claims, verify structure, and debug JSON Web Tokens. All client-side, no data leaves your browser.",
+    images: ["/og-image.png"],
   },
 };
 

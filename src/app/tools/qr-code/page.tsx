@@ -5,10 +5,29 @@ export const metadata = {
   title: "QR Code Generator - Free Online Tool",
   description: "Free online QR code generator. Generate QR codes from text, URLs, or any data. Download as PNG. Client-side, no server upload, 100% private.",
   keywords: ["qr code generator", "qrcode", "qr generator", "create qr code", "free qr code", "online qr tool"],
+  alternates: {
+    canonical: "/tools/qr-code",
+  },
   openGraph: {
+    url: "/tools/qr-code",
+    siteName: "CodeTools",
     title: "QR Code Generator - Free Online Tool",
     description: "Generate QR codes instantly from any text or URL. Download as PNG. 100% client-side.",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeTools - Free Online Developer Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QR Code Generator - Free Online Tool",
+    description: "Free online QR code generator. Generate QR codes from text, URLs, or any data. Download as PNG. Client-side, no server upload, 100% private.",
+    images: ["/og-image.png"],
   },
 };
 

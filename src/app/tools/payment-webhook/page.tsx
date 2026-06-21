@@ -5,10 +5,29 @@ export const metadata = {
   title: "Payment Webhook Simulator - Simulate Payment Callbacks",
   description: "Free online payment webhook simulator. Simulate Alipay, WeChat Pay, and Stripe payment callbacks for testing your webhook endpoint. Generate signed callback requests instantly. Essential for payment integration debugging.",
   keywords: ["payment webhook", "webhook simulator", "payment callback", "alipay callback", "wechat pay callback", "stripe webhook", "支付回调测试", "支付回调模拟", "webhook 测试"],
+  alternates: {
+    canonical: "/tools/payment-webhook",
+  },
   openGraph: {
+    url: "/tools/payment-webhook",
+    siteName: "CodeTools",
     title: "Payment Webhook Simulator - Free Payment Callback Tool",
     description: "Simulate Alipay, WeChat Pay, and Stripe payment callbacks for testing your webhook endpoint. Generate signed callback requests.",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeTools - Free Online Developer Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Payment Webhook Simulator - Simulate Payment Callbacks",
+    description: "Free online payment webhook simulator. Simulate Alipay, WeChat Pay, and Stripe payment callbacks for testing your webhook endpoint. Generate signed callback requests instantly. Essential for payment integration debugging.",
+    images: ["/og-image.png"],
   },
 };
 
